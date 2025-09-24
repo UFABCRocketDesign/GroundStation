@@ -1,6 +1,6 @@
 #ifndef BUZZER_H
 #define BUZZER_H
-#include "../config.h"
+#include "config.h"
 #include <Arduino.h>
 
 /**

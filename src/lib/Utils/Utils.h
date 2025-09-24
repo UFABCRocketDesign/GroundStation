@@ -2,7 +2,8 @@
 #define UTILS_H
 
 #include <Arduino.h>
-#include "../config.h"
+#include "config.h"
+
 
 #if (SD_CARD)
 #include <SPI.h>

@@ -14,7 +14,7 @@
 #define URD_APP 1
 #define IGN_MODE (URD_APP && 1)
 
-#define SD_CARD 1
+#define SD_CARD 0
 #define SD_NAME "GS"
 
 #define N_SISTEMAS (SD_CARD)
