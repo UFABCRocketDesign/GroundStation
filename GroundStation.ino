@@ -1,4 +1,4 @@
-#include "config.h"
+#include "src/lib/config.h"
 
 unsigned long currentTime = 0;
 
