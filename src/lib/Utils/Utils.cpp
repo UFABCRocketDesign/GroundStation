@@ -101,7 +101,7 @@ bool Utils::beginSD(const String& baseName) {
 bool Utils::logSD(const String& data) {
   dataFile = SD.open(nomeSD, FILE_WRITE);
   if (dataFile) {
-    dataFile.println(data);
+    dataFile.print(data);
     dataFile.flush();
     dataFile.close();
     return true;
@@ -194,12 +194,26 @@ void Utils::resetMaxValue() {
   maxSaved = -INFINITY;
 }
 
-void Utils::apitar(int tempo, int apitos, int buzzPin, bool buzzOn) {
-    for (int i = 0; i <= apitos; i++) {
-    if (buzzPin != -1) digitalWrite(buzzPin, !buzzOn);
+void Utils::apitar(int tempo, int apitos, int buzzPin, bool buzzOn, bool toneMode) {
+    for (int i = 1; i <= apitos; i++) {
+    if (buzzPin != -1) {
+      if (toneMode) {
+        tone(buzzPin, 1000);
+      }
+      else {
+        digitalWrite(buzzPin, buzzOn);
+      }
+    }
     digitalWrite(ledR, buzzOn);
     delay(tempo);
-    if (buzzPin != -1) digitalWrite(buzzPin, buzzOn);
+    if (buzzPin != -1) {
+      if (toneMode) {
+        noTone(buzzPin);
+      }
+      else {
+        digitalWrite(buzzPin, !buzzOn);
+      }
+    }
     digitalWrite(ledR, !buzzOn);
     delay(tempo);
   }

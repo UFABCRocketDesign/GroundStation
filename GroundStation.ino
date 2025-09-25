@@ -32,7 +32,10 @@ HardwareSerial &LoRa = Serial2;
 #endif
 
 #else
-HardwareSerial &LoRa = Serial2;
+HardwareSerial &LoRa = Serial3;
+#define M0_LORA_PIN 12
+#define M1_LORA_PIN 11
+#define AUX_LORA_PIN A8
 #endif
 
 // ========================================================
@@ -51,12 +54,25 @@ void setup() {
 #endif
 
 #if SD_CARD
-  utils.beginSD(SD_NAME);
+  if (utils.beginSD(SD_NAME)) {
+#if BUZZER
+  utils.apitar(50, 3, BUZZ_PIN, BUZZ_ON);
 #endif
+  } else {
+#if BUZZER
+    utils.apitar(750, 1, BUZZ_PIN, BUZZ_ON);
+#else
+    utils.apitar(750, 1);
+#endif
+  }
+
+#else
 
 #if BUZZER
   utils.apitar(50, 3, BUZZ_PIN, BUZZ_ON);
 #endif
+#endif
+
 
   pinMode(LED_R, OUTPUT);
 #if LED_RGB
@@ -133,11 +149,13 @@ void loop() {
       utils.setColor(black);
 #if BUZZER
       utils.apitar(50, 3, BUZZ_PIN, BUZZ_ON);
-#else
-      utils.apitar(50, 3, -1, 1);
 #endif
 #else
-      utils.apitar(50, 3, -1, 1);
+#if BUZZER
+      utils.apitar(50, 3, BUZZ_PIN, BUZZ_ON);
+#else
+      utils.apitar(50, 3);
+#endif
 #endif
       utils.reset();
     }
@@ -180,9 +198,6 @@ void loop() {
       utils.setColor(green);
       delay(50);
       utils.setColor(black);
-#if BUZZER
-      utils.apitar(50, 3, BUZZ_PIN, BUZZ_ON);
-#endif
 #else
       utils.apitar(50, 3, -1, 1);
 #endif
@@ -195,7 +210,9 @@ void loop() {
 #endif
       }
 #else
+#if SD_CARD
     if (utils.logSD(linha)) buzzer.add();  // salva no SD usando Utils
+#endif
 #endif
     }
   }

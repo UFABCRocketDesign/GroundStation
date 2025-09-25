@@ -8,7 +8,7 @@
 // ========================
 #define BUZZER 1
 #define LED_RGB 1
-#define LORA 1
+#define LORA 1 // Alterna entre LoRa na serial 2 (= 1) ou serial 3 (= 0)
 #define GPS 0
 
 #define URD_APP 1
@@ -17,11 +17,13 @@
 #define SD_CARD 1
 #define SD_NAME "GS"
 
-#define N_SISTEMAS (SD_CARD)
+#define N_SISTEMAS (1 + SD_CARD)
 
 #if defined(ARDUINO_ARCH_ESP32)
 #if LED_RGB
 #define LED_R 12
+#define LED_B -1
+#define LED_B -1
 #endif
 
 #if BUZZER
@@ -47,6 +49,8 @@
 #define LED_B 34
 #else
 #define LED_R 32
+#define LED_B -1
+#define LED_B -1
 #endif
 
 #if BUZZER

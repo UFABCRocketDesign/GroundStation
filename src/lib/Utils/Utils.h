@@ -88,7 +88,7 @@ class Utils {
     String readGPSLine();
 #endif
 
-    void apitar(int tempo, int apitos, int buzzPin, bool buzzOn);
+    void apitar(int tempo, int apitos, int buzzPin = -1, bool buzzOn = 1, bool toneMode = 0);
     void reset();
     void updateMax(float val);
     float getMaxValue();
