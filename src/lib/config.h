@@ -1,72 +1,61 @@
-#pragma once
+//======================================================= CONFIGURATION SYSTEM =================================================
+// Activate/deactivate modules of the embedded system. Each macro controls the inclusion of a functionality.
 
-#include <Arduino.h>
+//------------------------------------------------- BOARD SELECTION -------------------------------------------------//
+// Leave only ONE board active by uncommenting the corresponding line. This will ensure that the correct pinout and configurations are applied for your specific hardware setup.
+
+// #define PLACA_MAIN_OCTA_PTH 
+#define PLACA_ESSENTIALS_V1
+// #define PLACA_MAIN_PTH
+// #define PLACA_MAIN_SMD
+// #define PLACA_MAIN_IC
+
+// ----------------------- CONFIG -----------------------
+
+#define URD_CORE_ENABLE 1
+#define URD_GROUNDSTATION_ENABLE 1
+    #define PRINT_MODE 1  // Only for testing, not for flight 
+    #define DEBUG_MODE 1  // Only for testing, not for flight 
+
+#define LORA_MODE 1
+    #define LORA_MANAGER (LORA_MODE && 1)
+
+#define SD_CARD 0
+
+#define GPS_MODE 1
+    #define URD_GPS_ENABLE (GPS_MODE && 1)
+
+#define URD_BUZZER_ENABLE 0
+#define URD_LED_ENABLE 1
+
+#define FILE_NAME "GSLOG"
 
 
-// ========================
-// Configurações
-// ========================
-#define BUZZER 1
-#define LED_RGB 1
-#define LORA 1 // Alterna entre LoRa na serial 2 (= 1) ou serial 3 (= 0)
-#define GPS 0
+//======================================================= END OF CONFIGURATIONS =================================================
 
-#define URD_APP 1
-#define IGN_MODE (URD_APP && 1)
+//======================================================= PARAMETERS =================================================
 
-#define SD_CARD 1
-#define SD_NAME "GS"
 
-#define N_SISTEMAS (1 + SD_CARD)
 
-#if defined(ARDUINO_ARCH_ESP32)
-#if LED_RGB
-#define LED_R 12
-#define LED_B -1
-#define LED_B -1
+
+
+
+//======================================================= END OF PARAMETERS =================================================
+
+//------------------------------------------------- BOARD NAME -------------------------------------------------//
+#if defined(PLACA_MAIN_OCTA_PTH)
+  #define NOME_PLACA "PLACA MAIN OCTA PTH"
+#elif defined(PLACA_ESSENTIALS_V1)
+  #define NOME_PLACA "ESSENTIALS V1"
+#elif defined(PLACA_MAIN_PTH)
+  #define NOME_PLACA "PLACA MAIN PTH"
+#elif defined(PLACA_MAIN_SMD)
+  #define NOME_PLACA "PLACA MAIN SMD"
+#elif defined(PLACA_MAIN_IC)
+  #define NOME_PLACA "PLACA MAIN IC"
 #endif
 
-#if BUZZER
-#define BUZZ_PIN 27
-#define BUZZ_ON 1
-#else
-#define BUZZ_PIN -1
-#define BUZZ_ON 1
-#endif
-
-#if SD_CARD
-#define SD_CS 5  
-#else
-#define SD_CS -1  
-#endif
+//------------------------------------------------- BOARDS VALIDATIONS -------------------------------------------------//
 
 
-#else // --------------------
-
-#if LED_RGB
-#define LED_R 32
-#define LED_G 36
-#define LED_B 34
-#else
-#define LED_R 32
-#define LED_B -1
-#define LED_B -1
-#endif
-
-#if BUZZER
-#define BUZZ_PIN 22
-#define BUZZ_ON 1
-#else
-#define BUZZ_PIN -1
-#define BUZZ_ON 1
-#endif
-
-#if SD_CARD
-#define SD_CS 53  
-#else
-#define SD_CS -1  
-#endif
-
-
-
-#endif
+//------------------------------------------------- WARNINGS -------------------------------------------------//

@@ -1,0 +1,66 @@
+#ifndef URD_PROTOCOL_H
+#define URD_PROTOCOL_H
+
+#pragma once
+
+#if URD_CORE_ENABLE
+namespace UrdProtocol
+{
+    static const char READY[] = "READY";
+    static const char OK[] = "OK";
+
+    static const char RESET[] = "RST";
+    static const char RESETTING[] = "RESETTING";
+
+    static const char GPS_COORDS[] = "GPS_COORDS";
+    static const char NO_GPS_COORDS[] = "~\t~";
+
+    static const char SIMULATION[] = "SIMULATION";
+    static const char STARTED[] = "STARTED";
+
+    static const char LORA_CHANGE_REQUEST_APP[] = "MUDAR_FREQUENCIA";
+static const char LORA_FORCED_CHANGE_REQUEST_APP[] = "MUDAR_AGORA";
+
+static const char LORA_VALUE_PREFIX[] = "VALS:";
+
+static const char LORA_CHANGE_REQUEST_CONFIRMATION_APP[] = "MUDAR_OK";
+static const char LORA_FORCED_CHANGE_REQUEST_CONFIRMATION_APP[] = "MUDAR_AGORA_OK";
+static const char LORA_CHANGE_DONE_APP[] = "MUDAR_CERTO";
+
+static const char LORA_CHANGE_REQUEST_FLIGHT[] = "MUD4R_FR3Q_PFV.";
+
+static const char LORA_CHANGE_REQUEST_CONFIRMATION_FLIGHT[] = "CTZ_FR3Q.";
+
+static const char LORA_CHANGE_REQUEST_FINAL_CONFIRMATION_FLIGHT[] = "1SSO_MSM";
+
+static const char LORA_CHANGE_FINAL_DONE_CONFIRMATION_GS_FLIGHT[] = "MUD0U_MSM";
+static const char LORA_CHANGE_FINAL_DONE_CONFIRMATION_FC_FLIGHT[] = "JUR0_JUR4D1NH0";
+static const char LORA_CHANGE_FINAL_DONE_COMMUNICATION_FC_FLIGHT[] = "B04";
+
+static const char LORA_CHANGE_DONE_ERROR_FLIGHT[] = "MUD4R_ERRO";
+
+// Erros para o APP
+static const char LORA_CHANGE_ERROR_NOT_REQUESTED_APP[] = "MUDAR_ERRO_SEM_PEDIDO";
+static const char LORA_CHANGE_ERROR_UNEXPECTED_VALS_APP[] = "MUDAR_ERRO_VALS_FORA_DE_HORA";
+static const char LORA_CHANGE_ERROR_INVALID_FORMAT_APP[] = "MUDAR_ERRO_FORMATO";
+static const char LORA_CHANGE_ERROR_INVALID_CHAN_APP[] = "MUDAR_ERRO_CHAN";
+static const char LORA_CHANGE_ERROR_INVALID_ADDR_APP[] = "MUDAR_ERRO_ADDR";
+
+static const char LORA_CHANGE_ERROR_FORCE_FAILED_APP[] = "MUDAR_AGORA_ERRO";
+static const char LORA_CHANGE_ERROR_FC_CONFIRM_UNEXPECTED_APP[] = "MUDAR_ERRO_CONFIRMACAO_FC_FORA_DE_HORA";
+static const char LORA_CHANGE_ERROR_FC_CONFIRM_MISMATCH_APP[] = "MUDAR_ERRO_CONFIRMACAO_FC_DIFERENTE";
+
+static const char LORA_CHANGE_DONE_ERROR_ON_GS_APP[] = "MUDAR_ERRO_GS";
+static const char LORA_CHANGE_DONE_ERROR_APP[] = "MUDAR_ERRO";
+static const char LORA_CHANGE_ERROR_FC_REPORTED_APP[] = "MUDAR_ERRO_REPORTADO_FC";
+
+static const char LORA_CHANGE_TIMEOUT_GENERAL_APP[] = "MUDAR_ERRO_TIMEOUT_GERAL";
+static const char LORA_CHANGE_TIMEOUT_VALS_APP[] = "MUDAR_ERRO_TIMEOUT_VALS";
+static const char LORA_CHANGE_TIMEOUT_FC_CONFIRM_APP[] = "MUDAR_ERRO_TIMEOUT_CONFIRMACAO_FC";
+static const char LORA_CHANGE_TIMEOUT_FINAL_APP[] = "MUDAR_ERRO_TIMEOUT_FINAL";
+
+static const unsigned long LORA_CHANGE_TIMEOUT_MS = 30000UL;
+}
+#endif
+#endif
+
