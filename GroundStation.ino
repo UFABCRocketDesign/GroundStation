@@ -25,8 +25,8 @@ HardwareSerial LoRaSerial(1);
 
 #else
 
-// Arduino Mega
-SoftwareSerial LoRaSerial(LORA_RX, LORA_TX);
+// Arduino Mega (Placa Octa PTH)
+HardwareSerial& LoRaSerial = Serial2;
 
 #endif
 
@@ -40,8 +40,8 @@ HardwareSerial GpsSerial(2);
 
 #else
 
-// Arduino Mega
-SoftwareSerial GpsSerial(GPS_RX, GPS_TX);
+// Arduino Mega (Placa Octa PTH)
+HardwareSerial& GpsSerial  = Serial1;
 
 #endif
 
