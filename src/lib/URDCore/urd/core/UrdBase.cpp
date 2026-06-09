@@ -6,7 +6,7 @@
 #include <avr/wdt.h>
 #endif
 
-UrdBase::UrdBase(int baudRate)
+UrdBase::UrdBase(unsigned long baudRate)
 {
     baud = baudRate;
 

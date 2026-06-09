@@ -4,7 +4,7 @@
 #pragma once
 
 #include <Arduino.h>
-#include "src/lib/config.h"
+#include "../../../config.h"
 #include "UrdProtocol.h"
 
 #if URD_CORE_ENABLE
@@ -12,7 +12,7 @@
 class UrdBase
 {
 protected:
-    int baud;
+    unsigned long baud;
 
     bool appStarted;
     bool readyReceived;
@@ -28,7 +28,7 @@ protected:
     int buzzerFrequency;
 
 public:
-    explicit UrdBase(int baudRate = 115200);
+    explicit UrdBase(unsigned long baudRate = 115200UL);
 
     void begin();
 

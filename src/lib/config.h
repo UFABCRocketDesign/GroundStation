@@ -4,7 +4,7 @@
 //------------------------------------------------- BOARD SELECTION -------------------------------------------------//
 // Leave only ONE board active by uncommenting the corresponding line. This will ensure that the correct pinout and configurations are applied for your specific hardware setup.
 
-// #define PLACA_MAIN_OCTA_PTH 
+// #define PLACA_MAIN_OCTA_PTH
 #define PLACA_ESSENTIALS_V1
 // #define PLACA_MAIN_PTH
 // #define PLACA_MAIN_SMD
@@ -38,6 +38,11 @@
 #define URD_LED_ENABLE 1
 
 #define FILE_NAME "GSLOG"
+
+//------------------------------ LORA PARAMETERS ------------------------------//
+#define LORA_CHAN 42 // LoRa channel (Standardized: 904 MHz)
+#define LORA_ADDH 0x00
+#define LORA_ADDL 0x2A // 42 decimal
 
 
 //======================================================= END OF CONFIGURATIONS =================================================

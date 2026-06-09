@@ -167,6 +167,10 @@ void setup()
     loraManager.setPrint(true);
     loraManager.setDebug(true);
     loraManager.initE32(e32Module);
+    
+    // Apply standardized default configuration on startup
+    loraManager.changeFrequency(LORA_CHAN, LORA_ADDH, LORA_ADDL);
+    
     gs.initLoRaManager(loraManager);
 #endif
 
