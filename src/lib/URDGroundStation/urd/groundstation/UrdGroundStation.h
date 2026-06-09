@@ -4,14 +4,14 @@
 #pragma once
 
 #include <Arduino.h>
-#include "src\lib\URDCore\URDCore.h"
+#include "../../../URDCore/URDCore.h"
 
 #if LORA_MANAGER
-#include "src\lib\LoRaManager\LoRaManager.h"
+#include "../../../LoRaManager/LoRaManager.h"
 #endif
 
 #if SD_CARD
-#include "src\lib\SDManager\SDManager.h"
+#include "../../../SDManager/SDManager.h"
 #endif
 
 #if URD_GROUNDSTATION_ENABLE
@@ -82,7 +82,7 @@ private:
 #endif
 
 public:
-    explicit UrdGroundStation(int baudRate = 115200);
+    explicit UrdGroundStation(unsigned long baudRate = 115200UL);
 
     void setPrint(bool enable);
     void setDebug(bool enable);

@@ -3,7 +3,7 @@
 #if URD_GROUNDSTATION_ENABLE
 
 
-UrdGroundStation::UrdGroundStation(int baudRate)
+UrdGroundStation::UrdGroundStation(unsigned long baudRate)
     : UrdBase(baudRate)
 {
     gsStarted = false;
@@ -600,7 +600,7 @@ bool UrdGroundStation::decodeLoraChangeCommand(const String& command)
     loraChangeChanText = chanText;
     loraChangeAddressHex = addressText;
 
-    loraChangeCommand = String("CHAN") + loraChangeChanText + "_" + loraChangeAddressHex;
+    loraChangeCommand = String("CH4N") + loraChangeChanText + "_" + loraChangeAddressHex;
 
     return true;
 }
@@ -626,11 +626,6 @@ bool UrdGroundStation::applyDecodedLoraConfig()
 {
     if (loraManager == nullptr)
     {
-        return false;
-    }
-
-    if ((loraChangeChan == 0) || (loraChangeAddh == 0) || (loraChange == 0)) {
-        debugInfo(F("[DEBUG] CHAN/ADDH/ADDL invalid"));
         return false;
     }
 

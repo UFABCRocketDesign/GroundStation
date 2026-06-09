@@ -130,7 +130,7 @@
   #if (LORA_MODE)
     #define M0_LORA_PIN 26
     #define M1_LORA_PIN 25
-    #define AUX_LORA_PIN 36
+    #define AUX_LORA_PIN 35
     #define LORA_RX 33
     #define LORA_TX 32
   #endif
