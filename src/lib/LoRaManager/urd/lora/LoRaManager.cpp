@@ -128,13 +128,13 @@ bool LoRaManager::changeFrequency(
 {
     if (e32Module == nullptr)
     {
-        printDebug(F("[LORA DEBUG] E32 module not initialized."));
+        printDebug(F("[LORA MANAGER DEBUG] E32 module not initialized."));
         return false;
     }
 
     if (debugEnabled)
     {
-        Serial.print(F("[LORA DEBUG] Applying direct config: CHAN="));
+        Serial.print(F("[LORA MANAGER DEBUG] Applying direct config: CHAN="));
         Serial.print(channel);
 
         Serial.print(F(" ADDH=0x"));

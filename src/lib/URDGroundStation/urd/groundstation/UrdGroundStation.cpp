@@ -630,9 +630,9 @@ bool UrdGroundStation::applyDecodedLoraConfig()
     }
 
     if (debugEnabled) {
-        Serial.println(String("Applying LoRa config: CHAN=") + loraChangeChan +
-                       String(", ADDH=") + loraChangeAddh +
-                       String(", ADDL=") + loraChangeAddl);
+        Serial.println(String("[LORA DEBUG] Applying LoRa config: CHAN=") + loraChangeChan +
+                       String(", ADDH DEC=") + loraChangeAddh +
+                       String(", ADDL DEC=") + loraChangeAddl);
     }
 
     return loraManager->changeFrequency(

@@ -19,8 +19,17 @@
 
 #define LORA_MODE 1
     #define LORA_MANAGER (LORA_MODE && 1)
+      #define LORA_MANAGER_E32 1  // Set to 1 if using the E32 LoRa module (Do not change this for now, as the E22 support is not implemented yet)
+      #define LORA_MANAGER_E22 0  // Set 1 if using the E22 LoRa module (Not implemented yet)
+      #define LORA_FREQUENCY_MODE 900 // Set the LoRa frequency mode, based on the physical module (only implemented for 900 MHz yet)
+      
+      #define LORA_SET_FREQUENCY_ON_STARTUP (LORA_MANAGER && 1) // If enabled, the ground station will set the LoRa frequency on startup based on the defined LORA_BASE_CHAN, LORA_BASE_ADDH and LORA_BASE_ADDL values.
+        #define LORA_BASE_CHAN 41 // LoRa base frequency in MHz (needs to be inside the frequency range of the module)
+        #define LORA_BASE_ADDH 00 // LoRa address high byte (hex)
+        #define LORA_BASE_ADDL 17 // LoRa address low byte (hex)
 
-#define SD_CARD 0
+
+#define SD_CARD 1
 
 #define GPS_MODE 1
     #define URD_GPS_ENABLE (GPS_MODE && 1)

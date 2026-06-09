@@ -7,7 +7,29 @@
 #include "src/lib/config.h" 
 #include "src/lib/pinout.h"
 
-#include <LoRa_E32.h>
+#if (LORA_FREQUENCY_MODE == 900)
+  #define FREQUENCY_900
+  #define LORA_MAX_CHANNEL 69
+#elif (LORA_FREQUENCY_MODE == 433)
+  #define FREQUENCY_433
+  #define LORA_MAX_CHANNEL 0
+  #error "433Mhz Not implemented yet."
+#else
+  #error "Invalid LoRa Frequency. Use 900 or 433 MHz."
+#endif
+
+#if (LORA_MANAGER_E32 && LORA_MANAGER_E22)
+  #error "Multiple LoRa Managers defined. Define only one of LORA_MANAGER_E32 or LORA_MANAGER_E22."
+#endif
+
+#if (LORA_MANAGER_E32)
+  #include <LoRa_E32.h>
+#elif (LORA_MANAGER_E22)
+  #include <LoRa_E22.h>
+#else
+  #error "No LoRa Manager defined. Define LORA_MANAGER_E32 or LORA_MANAGER_E22."
+#endif
+
 #include <TinyGPS++.h>
 
 #include "src/lib/URDGroundStation/URDGroundStation.h"
@@ -176,6 +198,33 @@ void setup()
         3000UL,
         5000UL
     );
+#endif
+
+#if (LORA_SET_FREQUENCY_ON_STARTUP)
+    if(loraManager.changeFrequency(
+        LORA_BASE_CHAN,
+        LORA_BASE_ADDH,
+        LORA_BASE_ADDL
+    ))
+    {
+        Serial.println(F("LoRa base frequency set on startup."));
+        Serial.print(F("Frequency: "));
+        Serial.print(LORA_BASE_CHAN);
+        Serial.print(F(" MHz, ADDH=0x"));
+        Serial.print(LORA_BASE_ADDH, HEX);
+        Serial.print(F(", ADDL=0x"));
+        Serial.println(LORA_BASE_ADDL, HEX);
+    }
+    else
+    {
+        Serial.println(F("Failed to set LoRa base frequency on startup."));
+        Serial.print(F("Frequency: "));
+        Serial.print(LORA_BASE_CHAN);
+        Serial.print(F(" MHz, ADDH=0x"));
+        Serial.print(LORA_BASE_ADDH, HEX);
+        Serial.print(F(", ADDL=0x"));
+        Serial.println(LORA_BASE_ADDL, HEX);
+    }
 #endif
 
     gs.startHandshake();
