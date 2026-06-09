@@ -257,6 +257,11 @@ bool LoRaManager::changeFrequency(
         }
     }
 
+    if (success)
+    {
+        delay(200); // Settling time for hardware stability
+    }
+
     return success;
 }
 

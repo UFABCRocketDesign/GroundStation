@@ -58,6 +58,13 @@ private:
     uint8_t loraChangeChan;
     uint8_t loraChangeAddh;
     uint8_t loraChangeAddl;
+
+    uint8_t previousChan;
+    uint8_t previousAddh;
+    uint8_t previousAddl;
+    uint8_t currentChan;
+    uint8_t currentAddh;
+    uint8_t currentAddl;
 #endif
 
 #if SD_CARD
