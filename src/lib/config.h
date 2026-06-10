@@ -28,7 +28,8 @@
         #define LORA_BASE_ADDH 0x00 // LoRa address high byte (hex)
         #define LORA_BASE_ADDL 0x2A // LoRa address low byte (hex)
 
-#define SD_CARD 0
+
+#define SD_CARD 1
 
 #define GPS_MODE 1
     #define URD_GPS_ENABLE (GPS_MODE && 1)

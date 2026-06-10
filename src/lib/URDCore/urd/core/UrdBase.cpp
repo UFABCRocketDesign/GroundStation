@@ -40,7 +40,7 @@ void UrdBase::begin()
     if (buzzerEnabled)
     {
         playDot();
-        playDash();
+        playDot();
         playDot();
     }
 #endif

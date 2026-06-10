@@ -114,9 +114,7 @@ void UrdGroundStation::startHandshake()
     playDot();
     playDot();
 #endif
-#if URD_LED_ENABLE
-    ledOn();
-#endif
+
     while (!appStarted)
     {
 #if URD_BUZZER_ENABLE
@@ -145,7 +143,9 @@ void UrdGroundStation::startHandshake()
         delay(10);
     }
 
+#if URD_LED_ENABLE
     ledOn();
+#endif
 }
 
 #if LORA_MANAGER
@@ -639,6 +639,12 @@ bool UrdGroundStation::applyDecodedLoraConfig()
     previousChan = currentChan;
     previousAddh = currentAddh;
     previousAddl = currentAddl;
+
+    if (debugEnabled) {
+        Serial.println(String("[LORA DEBUG] Applying LoRa config: CHAN=") + loraChangeChan +
+                       String(", ADDH DEC=") + loraChangeAddh +
+                       String(", ADDL DEC=") + loraChangeAddl);
+    }
 
     bool success = loraManager->changeFrequency(
         loraChangeChan,

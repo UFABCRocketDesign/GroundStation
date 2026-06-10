@@ -128,27 +128,21 @@ bool LoRaManager::changeFrequency(
 {
     if (e32Module == nullptr)
     {
-        printDebug(F("[LORA DEBUG] E32 module not initialized."));
+        printDebug(F("[LORA MANAGER DEBUG] E32 module not initialized."));
         return false;
     }
 
     if (debugEnabled)
     {
-        Serial.print(F("[LORA DEBUG] Applying direct config: CHAN="));
+        Serial.print(F("[LORA MANAGER DEBUG] Applying direct config: CHAN="));
         Serial.print(channel);
 
         Serial.print(F(" ADDH=0x"));
-        if (addh < 0x10)
-        {
-            Serial.print('0');
-        }
+        if (addh < 0x10) Serial.print('0');
         Serial.print(addh, HEX);
 
         Serial.print(F(" ADDL=0x"));
-        if (addl < 0x10)
-        {
-            Serial.print('0');
-        }
+        if (addl < 0x10) Serial.print('0');
         Serial.println(addl, HEX);
     }
 
@@ -172,8 +166,6 @@ bool LoRaManager::changeFrequency(
 
     Configuration configuration = *(Configuration*) configContainer.data;
 
-    configContainer.close();
-
     configuration.CHAN = channel;
     configuration.ADDH = addh;
     configuration.ADDL = addl;
@@ -187,6 +179,8 @@ bool LoRaManager::changeFrequency(
     ResponseStatus response =
         e32Module->setConfiguration(configuration, WRITE_CFG_PWR_DWN_SAVE);
 
+    configContainer.close();
+
     if (debugEnabled)
     {
         Serial.print(F("[LORA DEBUG] setConfiguration: "));
@@ -197,6 +191,8 @@ bool LoRaManager::changeFrequency(
     {
         return false;
     }
+
+    delay(500);
 
     ResponseStructContainer checkContainer = e32Module->getConfiguration();
 
@@ -229,17 +225,11 @@ bool LoRaManager::changeFrequency(
         Serial.print(checkConfig.CHAN);
 
         Serial.print(F(" ADDH=0x"));
-        if (checkConfig.ADDH < 0x10)
-        {
-            Serial.print('0');
-        }
+        if (checkConfig.ADDH < 0x10) Serial.print('0');
         Serial.print(checkConfig.ADDH, HEX);
 
         Serial.print(F(" ADDL=0x"));
-        if (checkConfig.ADDL < 0x10)
-        {
-            Serial.print('0');
-        }
+        if (checkConfig.ADDL < 0x10) Serial.print('0');
         Serial.println(checkConfig.ADDL, HEX);
     }
 
@@ -247,14 +237,7 @@ bool LoRaManager::changeFrequency(
 
     if (printEnabled)
     {
-        if (success)
-        {
-            Serial.println(F("LoRa config ok"));
-        }
-        else
-        {
-            Serial.println(F("LoRa config err"));
-        }
+        Serial.println(success ? F("LoRa config ok") : F("LoRa config err"));
     }
 
     if (success)
