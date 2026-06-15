@@ -148,6 +148,9 @@ protected:
     
     void processLoraPacket(const String& packet);
 
+    bool isHexPacket(const String& str) const;
+    String decodeHexPacket(const String& hex) const;
+
 #if LORA_MANAGER
     bool processLoraChangeFrequency(const String& message);
     bool isValidLoraChangeCommand(const String& command);
