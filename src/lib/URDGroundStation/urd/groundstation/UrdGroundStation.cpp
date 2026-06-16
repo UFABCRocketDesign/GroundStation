@@ -284,7 +284,7 @@ bool UrdGroundStation::processLoraChangeFrequency(const String& message)
         }
 
         debugInfo(String("LoRa command decoded: ") + loraChangeCommand);
-        debugInfo(String("CHAN DEC: ") + loraChangeChanText);
+        debugInfo(String("CHAN HEX: ") + loraChangeChanText);
         debugInfo(String("ADDR HEX: ") + loraChangeAddressHex);
 
         loraChangeLastTime = millis();
@@ -522,7 +522,7 @@ bool UrdGroundStation::isValidLoraChanText(const String& chanText)
     String text = chanText;
     text.trim();
 
-    if (!isDecimalText(text))
+    if (!isHexaText(text))
     {
         return false;
     }
