@@ -521,15 +521,26 @@ bool UrdGroundStation::isValidLoraChanText(const String& chanText)
 {
     String text = chanText;
     text.trim();
+    text.toUpperCase();
+
+    if (text.startsWith("0X"))
+    {
+        text = text.substring(2);
+    }
+
+    if (text.length() < 1 || text.length() > 2)
+    {
+        return false;
+    }
 
     if (!isHexaText(text))
     {
         return false;
     }
 
-    int value = text.toInt();
+    unsigned long value = strtoul(text.c_str(), nullptr, 16);
 
-    if (value < 0 || value > 69)
+    if (value > 0x45UL)
     {
         return false;
     }
@@ -588,11 +599,25 @@ bool UrdGroundStation::decodeLoraChangeCommand(const String& command)
         return false;
     }
 
+    chanText.trim();
+    chanText.toUpperCase();
+
+    addressText.trim();
     addressText.toUpperCase();
 
-    int chanValue = chanText.toInt();
-    unsigned long addressValue = strtoul(addressText.c_str(), nullptr, 16);
+    if (chanText.startsWith("0X"))
+    {
+        chanText = chanText.substring(2);
+    }
 
+    if (addressText.startsWith("0X"))
+    {
+        addressText = addressText.substring(2);
+    }
+
+    unsigned long chanValue = strtoul(chanText.c_str(), nullptr, 16);
+    unsigned long addressValue = strtoul(addressText.c_str(), nullptr, 16);
+    
     loraChangeChan = static_cast<uint8_t>(chanValue);
     loraChangeAddh = static_cast<uint8_t>((addressValue >> 8) & 0xFF);
     loraChangeAddl = static_cast<uint8_t>(addressValue & 0xFF);
