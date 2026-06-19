@@ -34,7 +34,7 @@
 #define GPS_MODE 1
     #define URD_GPS_ENABLE (GPS_MODE && 1)
 
-#define URD_BUZZER_ENABLE 0
+#define URD_BUZZER_ENABLE 1
 #define URD_LED_ENABLE 1
 
 #define FILE_NAME "GSLOG"
