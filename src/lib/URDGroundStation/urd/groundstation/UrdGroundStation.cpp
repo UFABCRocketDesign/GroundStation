@@ -1091,12 +1091,6 @@ void UrdGroundStation::processLoraMessages()
             continue;
         }
 
-        if (isHexPacket(packet))
-        {
-            packet = decodeHexPacket(packet);
-            packet.trim();
-        }
-
         if (processLoraChangeFrequency(packet))
         {
             continue;
@@ -1167,37 +1161,6 @@ void UrdGroundStation::processLoraPacket(const String& packet)
 bool UrdGroundStation::isGsStarted() const
 {
     return gsStarted;
-}
-
-bool UrdGroundStation::isHexPacket(const String& str) const
-{
-    if (str.length() == 0 || str.length() % 2 != 0)
-    {
-        return false;
-    }
-    for (unsigned int i = 0; i < str.length(); i++)
-    {
-        char c = str[i];
-        if (!((c >= '0' && c <= '9') ||
-              (c >= 'A' && c <= 'F') ||
-              (c >= 'a' && c <= 'f')))
-        {
-            return false;
-        }
-    }
-    return true;
-}
-
-String UrdGroundStation::decodeHexPacket(const String& hex) const
-{
-    String decoded = "";
-    decoded.reserve(hex.length() / 2);
-    for (unsigned int i = 0; i < hex.length(); i += 2)
-    {
-        char c = (char)strtoul(hex.substring(i, i + 2).c_str(), nullptr, 16);
-        decoded += c;
-    }
-    return decoded;
 }
 
 #endif

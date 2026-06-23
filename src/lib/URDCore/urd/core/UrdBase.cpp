@@ -131,7 +131,8 @@ bool UrdBase::processReset(const String& message)
 
 void UrdBase::processUnknownMessage(const String& message)
 {
-    (void)message;
+    Serial.print(F("UNKNOWN_MSG: "));
+    Serial.println(message);
 }
 
 void UrdBase::markAppStarted()
