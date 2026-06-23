@@ -156,6 +156,10 @@ bool LoRaManager::changeFrequency(
             Serial.println(configContainer.status.getResponseDescription());
         }
 
+        if (configContainer.status.code == SUCCESS)
+        {
+            configContainer.close();
+        }
         return false;
     }
 
@@ -164,6 +168,12 @@ bool LoRaManager::changeFrequency(
     configuration.CHAN = channel;
     configuration.ADDH = addh;
     configuration.ADDL = addl;
+    configuration.SPED.airDataRate = AIR_DATA_RATE_101_192;
+    configuration.OPTION.fec = FEC_1_ON;
+    configuration.OPTION.fixedTransmission = FT_TRANSPARENT_TRANSMISSION;
+    configuration.OPTION.ioDriveMode = IO_D_MODE_PUSH_PULLS_PULL_UPS;
+    configuration.OPTION.transmissionPower = POWER_20;
+    configuration.OPTION.wirelessWakeupTime = WAKE_UP_250;
 
     ResponseStatus response =
         e32Module->setConfiguration(configuration, WRITE_CFG_PWR_DWN_SAVE);
@@ -193,6 +203,10 @@ bool LoRaManager::changeFrequency(
             Serial.println(checkContainer.status.getResponseDescription());
         }
 
+        if (checkContainer.status.code == SUCCESS)
+        {
+            checkContainer.close();
+        }
         return false;
     }
 
@@ -224,7 +238,19 @@ bool LoRaManager::changeFrequency(
         Serial.println(success ? F("LoRa config ok") : F("LoRa config err"));
     }
 
+    if (success)
+    {
+        delay(200); // Settling time for hardware stability
+    }
+
     return success;
+}
+
+bool LoRaManager::changeFrequency(const String& message) {
+    String m = message; m.replace("\\t", "\t"); m.trim();
+    int t = m.indexOf('\t'); if (t < 0) t = m.indexOf(' '); if (t < 0) return false;
+    long a = m.substring(t + 1).toInt();
+    return changeFrequency(m.substring(4, t).toInt() - 862, a >> 8, a & 0xFF);
 }
 
 void LoRaManager::printDebug(const __FlashStringHelper* message)

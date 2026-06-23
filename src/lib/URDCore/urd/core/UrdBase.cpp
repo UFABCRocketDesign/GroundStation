@@ -6,7 +6,7 @@
 #include <avr/wdt.h>
 #endif
 
-UrdBase::UrdBase(int baudRate)
+UrdBase::UrdBase(unsigned long baudRate)
 {
     baud = baudRate;
 
@@ -131,7 +131,8 @@ bool UrdBase::processReset(const String& message)
 
 void UrdBase::processUnknownMessage(const String& message)
 {
-    (void)message;
+    Serial.print(F("UNKNOWN_MSG: "));
+    Serial.println(message);
 }
 
 void UrdBase::markAppStarted()

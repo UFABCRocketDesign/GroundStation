@@ -5,7 +5,7 @@
 
 #include <Arduino.h>
 #include <math.h>
-#include "src\lib\URDCore\URDCore.h"
+#include "../../../URDCore/URDCore.h"
 
 #if URD_SIMULATION_ENABLE
 
