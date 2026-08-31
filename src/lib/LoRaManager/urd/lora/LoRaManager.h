@@ -47,6 +47,8 @@ public:
         uint8_t addl
     );
 
+    bool changeFrequency(const String& message);
+
 private:
     void printDebug(const __FlashStringHelper* message);
 };

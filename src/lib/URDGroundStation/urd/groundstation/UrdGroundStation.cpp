@@ -3,7 +3,7 @@
 #if URD_GROUNDSTATION_ENABLE
 
 
-UrdGroundStation::UrdGroundStation(int baudRate)
+UrdGroundStation::UrdGroundStation(unsigned long baudRate)
     : UrdBase(baudRate)
 {
     gsStarted = false;
@@ -31,6 +31,13 @@ UrdGroundStation::UrdGroundStation(int baudRate)
     loraChangeChan = 0;
     loraChangeAddh = 0;
     loraChangeAddl = 0;
+
+    previousChan = LORA_CHAN;
+    previousAddh = LORA_ADDH;
+    previousAddl = LORA_ADDL;
+    currentChan = LORA_CHAN;
+    currentAddh = LORA_ADDH;
+    currentAddl = LORA_ADDL;
 #endif
 
 #if SD_CARD
@@ -625,7 +632,7 @@ bool UrdGroundStation::decodeLoraChangeCommand(const String& command)
     loraChangeChanText = chanText;
     loraChangeAddressHex = addressText;
 
-    loraChangeCommand = String("CHAN") + loraChangeChanText + "_" + loraChangeAddressHex;
+    loraChangeCommand = String("CH4N") + loraChangeChanText + "_" + loraChangeAddressHex;
 
     return true;
 }
@@ -654,17 +661,30 @@ bool UrdGroundStation::applyDecodedLoraConfig()
         return false;
     }
 
+    previousChan = currentChan;
+    previousAddh = currentAddh;
+    previousAddl = currentAddl;
+
     if (debugEnabled) {
         Serial.println(String("[LORA DEBUG] Applying LoRa config: CHAN=") + loraChangeChan +
                        String(", ADDH DEC=") + loraChangeAddh +
                        String(", ADDL DEC=") + loraChangeAddl);
     }
 
-    return loraManager->changeFrequency(
+    bool success = loraManager->changeFrequency(
         loraChangeChan,
         loraChangeAddh,
         loraChangeAddl
     );
+
+    if (success)
+    {
+        currentChan = loraChangeChan;
+        currentAddh = loraChangeAddh;
+        currentAddl = loraChangeAddl;
+    }
+
+    return success;
 }
 
 void UrdGroundStation::checkLoraChangeTimeout()
@@ -690,6 +710,12 @@ void UrdGroundStation::checkLoraChangeTimeout()
     else if (loraWaitingFcFinalConfirmation)
     {
         Serial.println(UrdProtocol::LORA_CHANGE_TIMEOUT_FINAL_APP);
+
+        debugInfo(F("Reverting Ground Station to previous frequency because FC handshake timed out."));
+        loraManager->changeFrequency(previousChan, previousAddh, previousAddl);
+        currentChan = previousChan;
+        currentAddh = previousAddh;
+        currentAddl = previousAddl;
     }
     else
     {
